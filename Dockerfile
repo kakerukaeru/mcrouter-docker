@@ -7,6 +7,7 @@ ENV             MCROUTER_REPO           https://github.com/facebook/mcrouter.git
 ENV             DEBIAN_FRONTEND         noninteractive
 
 RUN             apt-get update && apt-get install -y git software-properties-common && \
+                apt-get install nscd && \
                 mkdir -p $MCROUTER_DIR/repo && \
                 cd $MCROUTER_DIR/repo && git clone $MCROUTER_REPO && \
                 cd $MCROUTER_DIR/repo/mcrouter/mcrouter/scripts && \
@@ -15,6 +16,8 @@ RUN             apt-get update && apt-get install -y git software-properties-com
                 ln -s $MCROUTER_DIR/install/bin/mcrouter /usr/local/bin/mcrouter
 
 ENV             DEBIAN_FRONTEND newt
+
+RUN     mkdir /var/spool/mcrouter
 
 EXPOSE  5000
 CMD     ["/usr/local/bin/mcrouter"]
